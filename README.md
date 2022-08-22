@@ -2,10 +2,6 @@
 
 siempre primero usar `WHERE` y luego `ORDER BY`
 
-# resumen SQL
-
-siempre primero usar `WHERE` y luego `ORDER BY`
-
 - [Tablas](https://github.com/brusati/resumen_sql/blob/main/README.md#tablas)
 	- [Crear tablas](https://github.com/brusati/resumen_sql/blob/main/README.md#crear-tablas)
 	- [Agregar columna](https://github.com/brusati/resumen_sql/blob/main/README.md#agregar-columna)
