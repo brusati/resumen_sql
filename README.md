@@ -11,6 +11,7 @@ siempre primero usar `WHERE` y luego `ORDER BY`
 	- [Eliminar filas](https://github.com/brusati/resumen_sql/blob/main/README.md#eliminar-filas)
 	- [Actualizar valores](https://github.com/brusati/resumen_sql/blob/main/README.md#actualizar-valores-de-la-tabla)
 	- [Clasificar resultados](https://github.com/brusati/resumen_sql/blob/main/README.md#clasificar-resultados)
+	- [Carga de datos desde archivo](https://github.com/brusati/resumen_sql/blob/main/README.md#carga-de-datos-desde-archivo)
 
 - [Columnas](https://github.com/brusati/resumen_sql/blob/main/README.md#columnas)
 	- [Seleccionar toda la tabla](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-toda-la-tabla)
@@ -163,6 +164,16 @@ FROM table_name;
 | Luis Suárez      | URU     | 11         | true          |
 | Edinson Cavani   | URU     | 11         | false         |
 
+### carga de datos desde archivo
+El comando COPY de PostgreSQL es un comando no estandar que permite cargar una tabla desde un archivo .csv y viceversa.
+
+```
+COPY mi_tabla
+FROM path_archivo --'/home/user.../archivo.csv'
+DELIMITER ';'
+CSV HEADER --para indicar que es un CSV con encabezado, y debe saltear la primera linea
+ENCODING 'LATIN1'; --indicamos el tipo de caracteres
+```
 
 ## columnas
 
