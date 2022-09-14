@@ -65,7 +65,30 @@ si queremos que una columna no pueda tener valores repetidos `column_name TIPO_D
 
 si queremos que una columna no pueda tener valores repetidos ni tampoco nulos `column_name TIPO_DE_DATO PRIMARY KEY,`
 
+atención: si se desea que más de una columna sea primary key entonces se debe definirlo de esta forma:
+```
+CREATE TABLE table_name (
+  column_name TIPO_DE_DATO,
+  another_column_name TIPO_DE_DATO
+  
+  PRIMARY KEY(column_name , another_column_name),
+);
+```
+
+si queremos que una columna sea foreign key:
+```
+CREATE TABLE table_name (
+  column_name TIPO_DE_DATO,
+  another_column_name TIPO_DE_DATO
+ 
+  FOREIGN KEY(column_name) REFERENCES table_name(column),
+  FOREIGN KEY(another_column_name) REFERENCES table_name(another_column);
+);
+```
+
 si queremos dejar un valor predeterminado en caso de que la fila no contenga ningún dato para esa columna `column_name TIPO_DE_DATO DEFAULT valor_default,`
+
+si queremos que los valores de una columna cumplan una determinada condición `column_name TIPO_DE_DATO CHECK condition`
 
 ### agregar columna
 `ALTER TABLE table_name ADD column TIPO_DE_DATO;`
@@ -377,6 +400,8 @@ UNION
 SELECT column3, column4, etc
 FROM table2;
 ```
+
+lo mismo es para una intersección (`INTERSECT`) o una diferencia (`EXCEPT`)
 
 ### joins
 
