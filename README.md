@@ -1,6 +1,8 @@
 # resumen SQL
 
-siempre primero usar `WHERE` y luego `ORDER BY`
+- siempre primero usar `WHERE` o `HAVING` antes de `ORDER BY`
+
+- para filtrar en un `GROUP BY` se usa `HAVING`, no `WHERE`
 
 - [Tablas](https://github.com/brusati/resumen_sql/blob/main/README.md#tablas)
 	- [Crear tablas](https://github.com/brusati/resumen_sql/blob/main/README.md#crear-tablas)
@@ -15,9 +17,15 @@ siempre primero usar `WHERE` y luego `ORDER BY`
 
 - [Columnas](https://github.com/brusati/resumen_sql/blob/main/README.md#columnas)
 	- [Seleccionar toda la tabla](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-toda-la-tabla)
+	- [Contar cuántas filas tiene la tabla](https://github.com/brusati/resumen_sql/blob/main/README.md#contar-cuántas-filas-tiene-la-tabla)
+	- [Contar cuántas filas tiene una determinada columna](https://github.com/brusati/resumen_sql/blob/main/README.md#contar-cuántas-filas-tiene-una-determinada-columna)
 	- [Seleccionar todas las filas de ciertas columnas](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-todas-las-filas-de-ciertas-columnas)
 	- [Seleccionar todas las filas de ciertas columnas y ordenarlas](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-todas-las-filas-de-ciertas-columnas-y-ordenarlas)
 	- [Seleccionar todos los valores posibles de una columna](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-todos-los-valores-posibles-de-una-columna)
+	- [Seleccionar primeras n filas](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-primeras-n-filas)
+	- [Seleccionar las filas que cumplen una condición en una o más columnas](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-las-filas-que-cumplen-una-condición-en-una-columna)
+	- [Seleccionar las filas cuyo valor en una columna está incluído en un string](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-las-filas-cuyo-valor-en-una-columna-está-incluído-en-un-string)
+	- [Concatenar dos columnas](https://github.com/brusati/resumen_sql/blob/main/README.md#concatenar-dos-columnas)
 	- [Contar cuántos valores posibles tiene una columna](https://github.com/brusati/resumen_sql/blob/main/README.md#contar-cuántos-valores-posibles-tiene-una-columna)
 	- [Contar cuántas filas tiene una determinada columna](https://github.com/brusati/resumen_sql/blob/main/README.md#contar-cuántas-filas-tiene-una-determinada-columna)
 	- [Contar cuántas filas que cumplen una condición tiene una determinada columna](https://github.com/brusati/resumen_sql/blob/main/README.md#contar-cuántas-filas-que-cumplen-una-condición-tiene-una-determinada-columna)
@@ -28,12 +36,6 @@ siempre primero usar `WHERE` y luego `ORDER BY`
 	- [Sumar los valores de una determinada columna](https://github.com/brusati/resumen_sql/blob/main/README.md#sumar-los-valores-de-una-determinada-columna)
 	- [Sumar los valores que cumplen una condición de una determinada columna](https://github.com/brusati/resumen_sql/blob/main/README.md#sumar-los-valores-que-cumplen-una-condición-de-una-determinada-columna)
 	- [Sumar los valores de una columna para cada valor posible de otra columna](https://github.com/brusati/resumen_sql/blob/main/README.md#sumar-los-valores-de-una-columna-para-cada-valor-posible-de-otra-columna)
-
-
-- [Filas](https://github.com/brusati/resumen_sql/blob/main/README.md#filas)
-	- [Seleccionar primeras n filas](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-primeras-n-filas)
-	- [Seleccionar las filas que cumplen una condición en una o más columnas](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-las-filas-que-cumplen-una-condición-en-una-columna)
-	- [Seleccionar las filas cuyo valor en una columna está incluído en un string](https://github.com/brusati/resumen_sql/blob/main/README.md#seleccionar-las-filas-cuyo-valor-en-una-columna-está-incluído-en-un-string)
  
 
 - [Trabajando con 2 tablas](https://github.com/brusati/resumen_sql/blob/main/README.md#trabajando-con-dos-tablas)
@@ -201,7 +203,21 @@ ENCODING 'LATIN1'; --indicamos el tipo de caracteres
 ## columnas
 
 ### seleccionar toda la tabla
-`SELECT * FROM table_name;`
+```
+SELECT * FROM table_name;
+```
+
+### contar cuántas filas tiene la tabla
+```
+SELECT COUNT(*) AS cant_filas
+FROM table_name;
+```
+
+### contar cuántas filas tiene una determinada columna
+```
+SELECT COUNT(column) AS cant_filas_columna
+FROM table_name;
+```
 
 ### seleccionar todas las filas de ciertas columnas
 ```
@@ -228,6 +244,54 @@ ORDER BY another_column ASC, column DESC;
 ### seleccionar todos los valores posibles de una columna
 ```
 SELECT DISTINCT column
+FROM table_name;
+```
+
+### seleccionar primeras n filas
+```
+SELECT *
+FROM table_name
+LIMIT n;
+```
+
+### seleccionar las filas que cumplen una condición en una columna
+```
+SELECT *
+FROM table_name
+WHERE column = valor_de_referencia;
+```
+
+ejemplo:
+```
+SELECT *
+FROM artists
+WHERE nationality = 'French';
+```
+
+en lugar de usar una serie de `OR`s podemos utilizar `WHERE column IN (valor1, valor2, ...)`
+
+### seleccionar las filas cuyo valor en una columna está incluído en un string
+```
+SELECT *
+FROM table_name
+WHERE column LIKE pattern;
+```
+
+atención, el `pattern` puede ser de las siguientes maneras:
+- si queremos que el string exacto --> `palabra`
+- si queremos cualquier string que termine con un cierto pattern --> `%palabra`
+- si queremos cualquier string que empiece con un cierto pattern --> `palabra%`
+- si queremos cualquier string que contenga un cierto pattern --> `%palabra%`
+
+### concatenar dos columnas
+```
+SELECT DISTINCT column || another_column AS new_colummn_name
+FROM table_name;
+```
+
+si queremos que los valores estén unidos mediante algún caracter:
+```
+SELECT DISTINCT column || 'caracter' || another_column AS new_colummn_name
 FROM table_name;
 ```
 
@@ -345,47 +409,6 @@ GROUP BY nationality;
 ```
 
 
-
-## seleccionar filas
-
-### seleccionar primeras n filas
-```
-SELECT *
-FROM table_name
-LIMIT n;
-```
-
-### seleccionar las filas que cumplen una condición en una columna
-```
-SELECT *
-FROM table_name
-WHERE column = valor_de_referencia;
-```
-
-ejemplo:
-```
-SELECT *
-FROM artists
-WHERE nationality = 'French';
-```
-
-en lugar de usar una serie de `OR`s podemos utilizar `WHERE column IN (valor1, valor2, ...)`
-
-### seleccionar las filas cuyo valor en una columna está incluído en un string
-```
-SELECT *
-FROM table_name
-WHERE column LIKE pattern;
-```
-
-atención, el `pattern` puede ser de las siguientes maneras:
-- si queremos que el string exacto --> `palabra`
-- si queremos cualquier string que termine con un cierto pattern --> `%palabra`
-- si queremos cualquier string que empiece con un cierto pattern --> `palabra%`
-- si queremos cualquier string que contenga un cierto pattern --> `%palabra%`
-
-
-
 ## trabajando con dos tablas
 
 ### unions
@@ -479,6 +502,13 @@ OFFSET 1-1;
 
 
 ### obtener el máximo o mínimo de una `columna`
+```
+SELECT MAX(columna)
+FROM table_name;
+```
+
+
+### obtener el máximo o mínimo de la cuenta de una `columna`
 ```
 SELECT MAX(columna)
 FROM table_name;
